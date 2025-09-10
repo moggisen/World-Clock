@@ -1,7 +1,7 @@
 import React from "react";
 import type { City } from "../types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import  AddCityForm  from "../components/AddCityForm";
+import AddCityForm from "../components/AddCityForm";
 import TimeDisplay from "../components/TimeDisplay";
 import { Link } from "react-router-dom";
 
@@ -21,6 +21,9 @@ const CitiesView: React.FC = () => {
   const removeCity = (id: string) => {
     setCities(cities.filter((c) => c.id !== id));
   };
+  const currDate: Date = new Date();
+  const dateStr: string = currDate.toDateString();
+  
 
   return (
     <section className="city-list">
@@ -34,8 +37,14 @@ const CitiesView: React.FC = () => {
         {cities.map((city) => (
           <article key={city.id} className="city-item">
             <span className="city-name">{city.name}</span>
+            <p className="digital-date">{dateStr}</p>
             <span className="digital-clock">
-            <TimeDisplay timezone={city.timezone} mode="digital" radius={80} /> </span>
+              <TimeDisplay
+                timezone={city.timezone}
+                mode="digital"
+                radius={80}
+              />{" "}
+            </span>
             <Link to={`/city/${city.id}`} className="analog-link">
               Show analog clock
             </Link>

@@ -170,7 +170,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 2rem;
   border-radius: 16px;
   background-color: rgba(255, 255, 255, 0.2);
@@ -191,6 +191,8 @@ button {
   background-color: #5bc4ce;
   color: white;
   text-decoration: none;
+ 
+  
 }
 
 .back-button:hover {
@@ -209,15 +211,17 @@ button {
   font-weight: bold;
 }
 
-
+.analog-date {
+  margin: 1px;
+}
 
 /* Carousel for navigating cities in CityClockView */
 .carousel {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
+  gap: 1rem;
+  
 }
 
 .carousel-left,

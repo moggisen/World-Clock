@@ -47,6 +47,8 @@ const CityClockView: React.FC = () => {
       </main>
     );
   }
+  const currDate: Date = new Date();
+  const dateStr: string = currDate.toDateString();
 
   // Get the active city and its background image
   const city = cities[activeIndex];
@@ -67,8 +69,9 @@ const CityClockView: React.FC = () => {
       <article className="city-detail-content">
         {/* City name  */}
         <h1 className="city-name-detail">{city.name}</h1>
+        <p className="analog-date">{dateStr}</p>
         {/* Analog clock for this city  */}
-        <TimeDisplay timezone={city.timezone} mode="analog" radius={180} />
+        <TimeDisplay timezone={city.timezone} mode="analog" radius={165} />
 
         {/* Buttons to move betweeen cities  */}
         <section className="carousel">

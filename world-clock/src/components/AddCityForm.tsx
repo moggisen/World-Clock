@@ -6,7 +6,7 @@ interface AddCityFormProps {
   onAddCity: (city: City) => void;
 }
 
-// Lista med vanliga städer
+// List with common cities (in a list )
 const commonCities: { timezone: TimeZone; name: string; emoji: string }[] = [
   { timezone: "Europe/Stockholm", name: "Stockholm", emoji: "🇸🇪" },
   { timezone: "Europe/Paris", name: "Paris", emoji: "🇫🇷" },
@@ -19,52 +19,59 @@ const commonCities: { timezone: TimeZone; name: string; emoji: string }[] = [
 ];
 
 const AddCityForm: React.FC<AddCityFormProps> = ({ onAddCity }) => {
-  const [name, setName] = useState("");
-  const [timezone, setTimezone] = useState<TimeZone | "">("");
-  const [customTimezone, setCustomTimezone] = useState("");
-  const [error, setError] = useState("");
+  const [name, setName] = useState(""); // City name
+  const [timezone, setTimezone] = useState<TimeZone | "">(""); // Timezone from dropdown
+  const [customTimezone, setCustomTimezone] = useState(""); // Custom timezone input
+  const [error, setError] = useState(""); // Error message
 
-  // När användaren väljer en tidszon från dropdown
+  // When user picks a timezone from the dropdown
   const handleTimezoneChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const tz = e.target.value as TimeZone;
     setTimezone(tz);
     setCustomTimezone("");
     setError("");
 
+    // If the choosen timezone is in our list, auto-fill the city name
     const city = commonCities.find((c) => c.timezone === tz);
     if (city) setName(city.name);
   };
 
-  // När användaren skriver i custom timezone
+  // When user types a custom timezone
   const handleCustomTimezoneChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setCustomTimezone(e.target.value.trim());
-    setTimezone(""); // rensa dropdown
-    setError(""); // inget fel medan man skriver
+    setTimezone(""); // Clear custom input
+    setError(""); // clear error
   };
 
-  // Validera custom timezone när användaren lämnar fältet
+  // When user leaves the custom timezone field, if it is written wrong an error messages shows
   const handleCustomTimezoneBlur = () => {
     const tz = customTimezone.trim();
-    if (!tz) return setError("");
+    if (!tz) return setError(""); // empty -> no error
 
     try {
+      // Check if timezone i valid
       new Intl.DateTimeFormat("en-US", { timeZone: tz }).format();
-      setError(""); // giltig tidszon
+      setError(""); // valid timezone -> no error message
     } catch {
+      // Invalid timezone -> showa the error message
       setError("Invalid timezone. Use format like 'Asia/Bangkok'.");
     }
   };
 
+  // When form i submitted
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const tz = customTimezone.trim() || timezone;
 
+    // Stop if missing data or there is an error
     if (!name.trim() || !tz || error) return;
 
+    // Send new city to parent component
     onAddCity({ id: uuid(), name, timezone: tz as TimeZone });
 
+    // Reset form fields when a city has been added
     setName("");
     setTimezone("");
     setCustomTimezone("");
@@ -74,9 +81,9 @@ const AddCityForm: React.FC<AddCityFormProps> = ({ onAddCity }) => {
   return (
     <form onSubmit={handleSubmit}>
       <fieldset>
-        <legend>Add City</legend>
+        <legend> WORLD CLOCK </legend> 
 
-        {/* Dropdown med vanliga städer */}
+        {/* Dropdown mith common cities */}
         <label>
           Choose from list:
           <select value={timezone} onChange={handleTimezoneChange}>
@@ -89,7 +96,7 @@ const AddCityForm: React.FC<AddCityFormProps> = ({ onAddCity }) => {
           </select>
         </label>
 
-        {/* Input för egen tidszon */}
+        {/* Input for custom timezone */}
         <label>
           Or type custom timezone:
           <input
@@ -101,10 +108,10 @@ const AddCityForm: React.FC<AddCityFormProps> = ({ onAddCity }) => {
           />
         </label>
 
-        {/* Felmeddelande */}
-       {error && <p className="error-message">{error}</p>}
+        {/* Error message */}
+        {error && <p className="error-message">{error}</p>}
 
-        {/* Input för stadens namn */}
+        {/* Input for city name */}
         <label>
           City name:
           <input
@@ -115,6 +122,7 @@ const AddCityForm: React.FC<AddCityFormProps> = ({ onAddCity }) => {
           />
         </label>
 
+        {/* Button to add a city  */}
         <button type="submit">Add City</button>
       </fieldset>
     </form>
