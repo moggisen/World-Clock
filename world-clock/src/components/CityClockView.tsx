@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import type { City } from "../types";
-import TimeDisplay from "./TimeDisplay";
+import TimeDisplay from "../components/TimeDisplay";
 import defaultImg from "../assets/default.jpg";
 import stockholmImg from "../assets/stockholm.jpg";
 import parisImg from "../assets/paris.jpg";

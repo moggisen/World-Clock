@@ -1,8 +1,8 @@
 import React from "react";
 import type { City } from "../types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { AddCityForm } from "../components/AddCityForm";
-import TimeDisplay from "./TimeDisplay";
+import  AddCityForm  from "../components/AddCityForm";
+import TimeDisplay from "../components/TimeDisplay";
 import { Link } from "react-router-dom";
 
 const CitiesView: React.FC = () => {
