@@ -2,15 +2,15 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CitiesView from "./components/CitiesView";
 import CityClockView from "./components/CityClockView";
-// import worldImg from "./assets/world.jpg";
+import worldImg from "./assets/world.jpg";
 import "./App.css";
 
 // Wrapper component for the home page
 const HomePage: React.FC = () => (
   <section
-    className="app city-list-page"
+    className="app city-view"
     style={{
-      // backgroundImage: `url(${worldImg})`,
+      backgroundImage: `url(${worldImg})`,
     }}
   >
     <CitiesView />

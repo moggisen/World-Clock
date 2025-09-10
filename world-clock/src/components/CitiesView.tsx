@@ -23,38 +23,26 @@ const CitiesView: React.FC = () => {
   };
 
   return (
-    <section className="cities-view">
-      {/* Sidebar with the form for adding cities */}
-      <aside className="overlay">
+    <section className="city-list">
+      {/* Overlay för formuläret */}
+      <article className="overlay">
         <AddCityForm onAddCity={addCity} />
-      </aside>
+      </article>
 
-      {/* List of city cards with digital clocks */}
-      <ul className="scroll-list">
+      {/* Grid med digitala klockor */}
+      <section className="scroll-list">
         {cities.map((city) => (
-          <li key={city.id} className="city-item">
-            <h2 className="city-name">{city.name}</h2>
-            {/* Digital clock for the city */}
-            <time className="digital-clock">
-              <TimeDisplay
-                timezone={city.timezone}
-                mode="digital"
-                radius={80}
-              />
-            </time>
-            {/* Link to view the city's analog clock */}
-            <nav>
-              <Link to={`/city/${city.id}`} className="analog-link">
-                Visa analog klocka
-              </Link>
-            </nav>
-            {/* Button to remove a city */}
-            <button type="button" onClick={() => removeCity(city.id)}>
-              Ta bort
-            </button>
-          </li>
+          <article key={city.id} className="city-item">
+            <span className="city-name">{city.name}</span>
+            <span className="digital-clock">
+            <TimeDisplay timezone={city.timezone} mode="digital" radius={80} /> </span>
+            <Link to={`/city/${city.id}`} className="analog-link">
+              Show analog clock
+            </Link>
+            <button onClick={() => removeCity(city.id)}>Delete</button>
+          </article>
         ))}
-      </ul>
+      </section>
     </section>
   );
 };

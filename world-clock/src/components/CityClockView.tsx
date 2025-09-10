@@ -71,7 +71,7 @@ const CityClockView: React.FC = () => {
         <TimeDisplay timezone={city.timezone} mode="analog" radius={180} />
 
         {/* Buttons to move betweeen cities  */}
-        <section className="city-carousel">
+        <section className="carousel">
           <button
             type="button"
             className="carousel-left"

@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import type { TimeZone } from "../types";
 
-interface TimeDisplayProps {
-  timezone: TimeZone;
+interface ClockProps {
+  timezone: TimeZone | string; // Accepterar även egen input som string
   mode: "digital" | "analog";
-  // cityName?: string;
   radius?: number;
 }
 
-const AnalogClock: React.FC<{ time: Date; radius?: number }> = ({
-  time,
-  radius = 100,
-}) => {
+// Enkel analog klocka
+const AnalogClock: React.FC<{ time: Date; radius?: number }> = ({ time, radius = 100 }) => {
   const seconds = time.getSeconds();
   const minutes = time.getMinutes();
   const hours = time.getHours();
@@ -22,29 +19,14 @@ const AnalogClock: React.FC<{ time: Date; radius?: number }> = ({
   const secondLength = radius * 0.8;
 
   const numbers = Array.from({ length: 12 }, (_, i) => i + 1);
-
-  const marks = Array.from({ length: 60 }, (_, i) => i + 1);
+  const marks = Array.from({ length: 60 }, (_, i) => i);
 
   return (
-    <svg
-      viewBox={`0 0 ${radius * 2} ${radius * 2}`}
-      width={radius * 2}
-      height={radius * 2}
-      style={{ display: "block" }}
-    >
-      {/* Circle of the clock  */}
-      <circle
-        cx={center}
-        cy={center}
-        r={radius}
-        stroke="black"
-        strokeWidth={2}
-        fill="white"
-      />
+    <svg viewBox={`0 0 ${radius * 2} ${radius * 2}`} width={radius * 2} height={radius * 2}>
+      <circle cx={center} cy={center} r={radius} stroke="black" strokeWidth={2} fill="white" />
 
-      {/* Marks of minutes and hours */}
       {marks.map((m) => {
-        const angle = m * 6 * (Math.PI / 180);
+        const angle = (m * 6) * (Math.PI / 180);
         const markLength = m % 5 === 0 ? 8 : 4;
         const x1 = center + (radius - markLength) * Math.sin(angle);
         const y1 = center - (radius - markLength) * Math.cos(angle);
@@ -63,7 +45,7 @@ const AnalogClock: React.FC<{ time: Date; radius?: number }> = ({
         );
       })}
 
-      {/* Visare */}
+      {/* Tim-, minut- och sekundvisare */}
       <line
         x1={center}
         y1={center}
@@ -98,15 +80,7 @@ const AnalogClock: React.FC<{ time: Date; radius?: number }> = ({
         const x = center + radius * 0.8 * Math.sin(angle);
         const y = center - radius * 0.8 * Math.cos(angle);
         return (
-          <text
-            key={num}
-            x={x}
-            y={y}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize={radius * 0.15}
-            fontWeight="bold"
-          >
+          <text key={num} x={x} y={y} textAnchor="middle" dominantBaseline="middle" fontSize={radius * 0.15} fontWeight="bold">
             {num}
           </text>
         );
@@ -115,51 +89,45 @@ const AnalogClock: React.FC<{ time: Date; radius?: number }> = ({
   );
 };
 
-const TimeDisplay: React.FC<TimeDisplayProps> = ({
-  timezone,
-  mode,
-  radius = 100,
-}) => {
+const TimeDisplay: React.FC<ClockProps> = ({ timezone, mode, radius = 100 }) => {
   const [time, setTime] = useState(new Date());
+  const [validTime, setValidTime] = useState<Date>(new Date());
 
+  // Uppdatera klockan varje sekund
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  let localTime: Date;
-  try {
-    const parts = new Intl.DateTimeFormat("enGB", {
-      timeZone: timezone,
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    }).formatToParts(time);
+  // Försök beräkna tid i angiven tidszon
+  useEffect(() => {
+    try {
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: timezone,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      }).formatToParts(time);
 
-    const hours = parseInt(
-      parts.find((p) => p.type === "hour")?.value || "0",
-      10
-    );
-    const minutes = parseInt(
-      parts.find((p) => p.type === "minute")?.value || "0",
-      10
-    );
-    const seconds = parseInt(
-      parts.find((p) => p.type === "second")?.value || "0",
-      10
-    );
+      const hours = parseInt(parts.find((p) => p.type === "hour")?.value || "0", 10);
+      const minutes = parseInt(parts.find((p) => p.type === "minute")?.value || "0", 10);
+      const seconds = parseInt(parts.find((p) => p.type === "second")?.value || "0", 10);
 
-    localTime = new Date();
-    localTime.setHours(hours, minutes, seconds, 0);
-  } catch {
-    localTime = new Date(time.toLocaleString("en-US", { timeZone: "UTC " }));
-  }
+      const local = new Date();
+      local.setHours(hours, minutes, seconds, 0);
+      setValidTime(local);
+    } catch {
+      // Om tidszonen är ogiltig, fallback till lokal tid
+      setValidTime(time);
+    }
+  }, [time, timezone]);
 
+  // Visa digitalt eller analogt
   return mode === "digital" ? (
-    <time>{localTime.toLocaleTimeString("en-GB", { hour12: false })}</time>
+    <time>{validTime.toLocaleTimeString("en-GB", { hour12: false })}</time>
   ) : (
-    <AnalogClock time={localTime} radius={radius} />
+    <AnalogClock time={validTime} radius={radius} />
   );
 };
 
