@@ -26,6 +26,33 @@ Dom ligger utanför komponenter eftersom den är generell och kan återanvändas
 ### Förklara och motivera din val av struktur (enligt ovanstående punkter)
 Separationen mellan UI-komponenter, logik och typer gör koden mer läsbar, återandvändbar och lättare att underhålla vid antingen buffar eller om man vill bygga vidare på den.
 
+### Förklara minst 3 ställen där TypeScript ger fördelar jämfört med JavaScript i din kod
+
+**1. Strukturerade data med interface**
+
+```ts 
+export interface City {
+  id: string;
+  name: string;
+  timezone: TimeZone;
+  imageUrl?: string;
+}
+```
+Här får jag en tydlig bild av hur en stad ska se ut och TypeScript kommer att stoppa med direkt om jag glömt ett fält eller skriver fel typ. I JavaScript hade jag bara upptäckt det när jag kört applikationen.
+
+**2. Säker routing med UseParams**
+
+```ts
+const { id } = useParams<{ id: string }>();
+````
+Genom att jag har <{ id: string }> vet jag att id alltid ska vara en string och utan detta hade id kunnat vara undefined eller fel typ utan varning. TypeScript minskar risken för buggar när jag använder id för att hitta rätt stad.
+
+**3. Strikare kontroll på datum**
+```ts
+const [validTime, setValidTime] = useState<Date>(new Date());
+````
+Här ser TypeScript till att validTime alltid är en Date, om jag försöker spara något annat t.ex. en string får jag fel direkt. I JavaScript hade jag kunnat fått konstiga buggar för när klockan försöker rendera.
+
 ### Hur gick du tillväga när du använde Git, samt när du testade att programmet faktiskt fungerade som det ska.
 Jag gjorde min sida först direkt i VS code utan Git, men sen gjorde jag en repsitory och började om med koden just för att jag ville få in rutinen att göra commits och komma in mer i Git igen. Så då gjorde jag en commit efter varje fil jag gjorde, tills jag var inne i ett flow och glömde göra en commit och började hålla på på fler ställen och gjorde inte commit för varje fil utan råkade blir för alla ändring jag hade gjort för stunden. När jag testade min sida gjorde jag det i webbläsaren och jag hade alltid igång min sida i webbläsare eftersom att man ser ändringar direkt när man ändrar nånting. Testade att all funktionalitet fungerade som att både digitala och analoga klockorna visade rätt tid. Att knapparna jag lagt till visade rätt saker och fungerade som dom skulle.
 
@@ -70,7 +97,7 @@ Används i TimeDisplay
 
 ### Fördelar med Typescript jämfört med JavaScript
 
-** 1: Strika typer för props**
+**1: Strika typer för props**
 
 ```ts
 interface ClockProps {
