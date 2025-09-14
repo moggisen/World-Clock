@@ -81,7 +81,7 @@ button {
 }
 
 /* Grid for digital clock cards in CitiesView */
-.scroll-list {
+.cities-list {
   display: flex; /* Flex used instead of grid */
   justify-content: center; /* Center the cards */
   flex-wrap: wrap;
