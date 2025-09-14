@@ -6,7 +6,7 @@ import worldImg from "./assets/world.jpg";
 import "./App.css";
 
 // Wrapper component for the home page
-const HomePage: React.FC = () => (
+const HomePage = () => (
   <section
     className="app city-view"
     style={{
