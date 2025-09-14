@@ -29,7 +29,7 @@ const CitiesView = () => {
   return (
     <section className="city-list">
       {/* Form for adding a new city */}
-      <article className="overlay">
+      <article className="cityForm">
         <AddCityForm onAddCity={addCity} />
       </article>
 
