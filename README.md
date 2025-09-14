@@ -5,7 +5,7 @@
 ### Hur tänkte du när du skissade gränssnitt? Gärna länk till skisser.
 
 När jag började fundera på hur jag ville att gränssnittet skulle vara ville jag att det skulle vara enkelt och tydligt så att vem som helst kan använda min applikation. 
-[Länk till Figma] (https://www.figma.com/design/Qu5LdzFKVbjgxQiNditeU2/Untitled?node-id=0-1&m=dev&t=W4cBhsFydOv5ZIJv-1)
+[Länk till Figma](https://www.figma.com/design/Qu5LdzFKVbjgxQiNditeU2/Untitled?node-id=0-1&m=dev&t=W4cBhsFydOv5ZIJv-1)
 
 ---
 
