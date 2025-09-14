@@ -1,11 +1,11 @@
 import type { City } from "../types";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import AddCityForm from "../components/AddCityForm";
-import TimeDisplay from "../components/TimeDisplay";
+import AddCityForm from "./AddCityForm";
+import TimeDisplay from "./TimeDisplay";
 import { Link } from "react-router-dom";
 
 const CitiesView = () => {
-    // Load list of citites from localStorage 
+  // Load list of citites from localStorage
   const [cities, setCities] = useLocalStorage<City[]>("cities", []);
 
   // Function to add a new city
@@ -18,14 +18,13 @@ const CitiesView = () => {
     );
     if (!exists) setCities([...cities, city]);
   };
-  // Function to remove a city using its unique ID 
+  // Function to remove a city using its unique ID
   const removeCity = (id: string) => {
     setCities(cities.filter((c) => c.id !== id));
   };
   // Get today's date (Show on each city card)
   const currDate: Date = new Date();
   const dateStr: string = currDate.toDateString();
-  
 
   return (
     <section className="city-list">
