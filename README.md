@@ -26,6 +26,8 @@ Dom ligger utanför komponenter eftersom den är generell och kan återanvändas
 ### Förklara och motivera din val av struktur (enligt ovanstående punkter)
 Separationen mellan UI-komponenter, logik och typer gör koden mer läsbar, återandvändbar och lättare att underhålla vid antingen buffar eller om man vill bygga vidare på den.
 
+---
+
 ### Förklara minst 3 ställen där TypeScript ger fördelar jämfört med JavaScript i din kod
 
 **1. Strukturerade data med interface**
