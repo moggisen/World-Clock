@@ -56,6 +56,7 @@ Här ser TypeScript till att validTime alltid är en Date, om jag försöker spa
 ### Hur gick du tillväga när du använde Git, samt när du testade att programmet faktiskt fungerade som det ska.
 Jag gjorde min sida först direkt i VS code utan Git, men sen gjorde jag en repsitory och började om med koden just för att jag ville få in rutinen att göra commits och komma in mer i Git igen. Så då gjorde jag en commit efter varje fil jag gjorde, tills jag var inne i ett flow och glömde göra en commit och började hålla på på fler ställen och gjorde inte commit för varje fil utan råkade blir för alla ändring jag hade gjort för stunden. När jag testade min sida gjorde jag det i webbläsaren och jag hade alltid igång min sida i webbläsare eftersom att man ser ändringar direkt när man ändrar nånting. Testade att all funktionalitet fungerade som att både digitala och analoga klockorna visade rätt tid. Att knapparna jag lagt till visade rätt saker och fungerade som dom skulle.
 
+---
 ### Vilka typer och interfaces har du valt att lägga i egna filer för återanvändning?
 
 **1. TimeZone - type**
@@ -95,6 +96,8 @@ export interface ClockSettings {
 ````
 Används i TimeDisplay
 
+---
+
 ### Fördelar med Typescript jämfört med JavaScript
 
 **1: Strika typer för props**
@@ -120,9 +123,13 @@ export interface City {
 ````
 Alla filer vet exakt att City-objektet innehåller om jag glömmer att skicka med id när jag skapar en ny stad kommer TypScript att varna direkt. Vilket inte JavSCript hade gjort.
 
+---
+
 ### Beskriva hur TypeScript transpileras till JavaScript i ditt projekt.
 
 TypeScript går inte att köra direkt i webbläsare, därför måste koden transpileras med andra ord översättas till vanlig JavaScript. Eftersom att jag använder Vite i mitt projekt så tar Vite hand om procesen automatiskt. Så när jag kör npm run dev i terminalen för att köra applikationen så kontrolleras min kod så om jag har skrivit fel nånstans t.ex. satt en sträng där de ska vara number får jag ett fel. Sen tas alla typer bort för dom syns aldrig i den färdiga JavaScript koden. Därefter transpileras koden till vanlig JAvaScript och webbläsaren förstår då koden. 
+
+---
 
 ## Loggbok för World Clock
 
